@@ -2,5 +2,13 @@
 
 
 test('can create post', function () {
-g
+    $postAction = new \App\Actions\Post\CreatePost();
+    $postRequest = new \App\Http\Requests\CreatePostRequest();
+    $postRequest->setJson([
+        'title' => '1',
+        'body' => '2'
+    ]);
+    $postAction->handle(
+        $postRequest
+    );
 });
