@@ -9,18 +9,16 @@ use Illuminate\Support\Facades\Log;
 
 final class CreatePost
 {
-    public function handle(CreatePostRequest $request): void
+    public function handle(CreatePostRequest $request): Post
     {
-        try {
-            DB::beginTransaction();
-            Post::create([
-                'title' => $request->title,
-                'body' => $request->body,
-            ]);
-            DB::commit();
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error($exception->getMessage());
-        }
+       return DB::transaction(function () use ($request) {
+           $post = new Post();
+           $post->title = $request->title;
+           $post->body = $request->body;
+           $post->user_id = $request->user_id;
+           $post->save();
+           return $post;
+       });
+
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $title
  * @property string $body
  * @property string $category
+ * @property integer $user_id
  */
 class Post extends Model
 {
